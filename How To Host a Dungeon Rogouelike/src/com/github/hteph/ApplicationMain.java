@@ -12,6 +12,8 @@ public class ApplicationMain extends JFrame implements KeyListener {
     private AsciiPanel terminal;
     private Screen screen;
 
+    
+// Constructor ------------------------------------
     public ApplicationMain(){
         super();
         terminal = new AsciiPanel();
@@ -36,10 +38,14 @@ public class ApplicationMain extends JFrame implements KeyListener {
     public void keyReleased(KeyEvent e) { }
 
     public void keyTyped(KeyEvent e) { }
+    
+    
 
     public static void main(String[] args) {
         ApplicationMain app = new ApplicationMain();
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         app.setVisible(true);
     }
+    
+    
 }

@@ -2,15 +2,19 @@ package com.github.hteph.components;
 
 import java.util.List;
 
+import com.github.hteph.utilities.FieldOfView;
+
 public class PlayerAi extends CreatureAi {
 
     private List<String> messages;
+    private FieldOfView fov;
     
 //Constructor ------------------------------------------------------------
 	
-    public PlayerAi(Creature creature, List<String> messages) {
+    public PlayerAi(Creature creature, List<String> messages, FieldOfView fov) {
         super(creature);
         this.messages = messages;
+        this.fov = fov;
     }
   
 // Methods -------------------------------------------------------------------
@@ -27,5 +31,9 @@ public class PlayerAi extends CreatureAi {
     
     public void onNotify(String message){
         messages.add(message);
+    }
+    
+    public boolean canSee(int wx, int wy, int wz) {
+        return fov.isVisible(wx, wy, wz);
     }
 }

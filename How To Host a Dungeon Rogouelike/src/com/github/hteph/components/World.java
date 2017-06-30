@@ -7,6 +7,8 @@ import java.util.List;
 
 public class World {
 	private Tile[][][] tiles;
+	private Item[][][] items;
+
 	private int width;
 	public int width() { return width; } //TODO change to a getter?
 
@@ -25,6 +27,7 @@ public class World {
 		this.height = tiles[0].length;
 		this.depth = tiles[0][0].length;
 		this.creatures = new ArrayList<Creature>();
+		this.items = new Item[width][height][depth];
 	}
 
 //Methods ---------------------------------------------------------------------
@@ -34,21 +37,35 @@ public class World {
 			return Tile.BOUNDS;
 		else
 			return tiles[x][y][z];
-	} 
-
-	public char glyph(int x, int y, int z){ //TODO change to a getter, but a once removed one?
-		return tile(x, y, z).glyph();
+	}
+	
+	public Item item(int x, int y, int z){ //TODO another lousy name on method
+	    return items[x][y][z];
 	}
 
-	public Color color(int x, int y, int z){//TODO change to a getter, but a once removed one?
-		return tile(x, y, z).color();
+	public char glyph(int x, int y, int z){ //TODO another lousy name on method
+	    Creature creature = creature(x, y, z);
+	    
+	    if (creature != null) return creature.glyph();
+	    
+	    if (item(x,y,z) != null)  return item(x,y,z).glyph();
+	    
+	    return tile(x, y, z).glyph();
+	}
+	public Color color(int x, int y, int z){//TODO another lousy name on method
+	    Creature creature = creature(x, y, z);
+	    if (creature != null) return creature.color();
+	    
+	    if (item(x,y,z) != null) return item(x,y,z).color();
+	    
+	    return tile(x, y, z).color();
 	} 
 	
 	public void dig(int x, int y, int z) {
 	    if (tile(x,y,z).isDiggable())
 	        tiles[x][y][z] = Tile.FLOOR;
 	}
-	
+	// Creature initial placement
 	public void addAtEmptyLocation(Creature creature, int z){
 	    int x;
 	    int y;
@@ -77,13 +94,58 @@ public class World {
 	    creatures.remove(other);
 	}
 	
+	public void remove(int x, int y, int z) {
+	    items[x][y][z] = null;
+	}
+	
 	public void update(){
 	    List<Creature> toUpdate = new ArrayList<Creature>(creatures);
 	    for (Creature creature : toUpdate){
 	        creature.update();
 	    }
 	}
-	
+	// Item initial placement
+	public void addAtEmptyLocation(Item item, int depth) {
+	    int x;
+	    int y;
+	    
+	    do {
+	        x = (int)(Math.random() * width);
+	        y = (int)(Math.random() * height);
+	    }
+	    while (!tile(x,y,depth).isGround() || item(x,y,depth) != null);
+	    
+	    items[x][y][depth] = item;
+	}
 
-	
+	public boolean addAtEmptySpace(Item item, int x, int y, int z){
+		if (item == null)
+			return true;
+		
+		List<Point> points = new ArrayList<Point>();
+		List<Point> checked = new ArrayList<Point>();
+		
+		points.add(new Point(x, y, z));
+		
+		while (!points.isEmpty()){
+			Point p = points.remove(0);
+			checked.add(p);
+			
+			if (!tiles[p.x][p.y][p.z].isGround())
+				continue;
+				
+			if (items[p.x][p.y][p.z] == null){
+				items[p.x][p.y][p.z] = item;
+				Creature c = this.creature(p.x, p.y, p.z);
+				if (c != null)
+					c.notify("A %s lands between your feet.", item.name());
+				return true;
+			} else {
+				List<Point> neighbors = p.neighbors8();
+				neighbors.removeAll(checked);
+				points.addAll(neighbors);
+			}
+		}
+		return false;
+	}
 }

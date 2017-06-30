@@ -1,19 +1,19 @@
 package com.github.hteph.components;
 
-import com.github.hteph.utilities.CreatureFactory;
+import com.github.hteph.utilities.StuffFactory;
 
 public class FungusAi extends CreatureAi {
 	 
-	private CreatureFactory factory;
+	private StuffFactory factory;
     private int spreadcount;
  
-    public FungusAi(Creature creature, CreatureFactory factory) {
+    public FungusAi(Creature creature, StuffFactory factory) {
         super(creature);
         this.factory = factory;
     }
 
     public void onUpdate(){
-        if (spreadcount < 50 && Math.random() < 0.5)
+        if (spreadcount < 10 && Math.random() < 0.02)
             spread();
     }
  
@@ -21,7 +21,7 @@ public class FungusAi extends CreatureAi {
         int x = creature.x + (int)(Math.random() * 11) - 5;
         int y = creature.y + (int)(Math.random() * 11) - 5;
   
-        if (!creature.canEnter(x, y))
+        if (!creature.canEnter(x, y, creature.z))
             return;
   
         Creature child = factory.newFungus(creature.z);
