@@ -1,6 +1,7 @@
 package com.github.hteph.components;
 
 import com.github.hteph.utilities.Line;
+import com.github.hteph.utilities.Point;
 
 public class CreatureAi {
     protected Creature creature;

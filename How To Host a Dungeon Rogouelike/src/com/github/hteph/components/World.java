@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.github.hteph.utilities.Point;
+
 public class World {
 	private Tile[][][] tiles;
 	private Item[][][] items;

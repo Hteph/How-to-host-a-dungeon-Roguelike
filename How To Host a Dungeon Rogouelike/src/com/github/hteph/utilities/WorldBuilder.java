@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.github.hteph.components.Point;
 import com.github.hteph.components.Tile;
 import com.github.hteph.components.World;
 

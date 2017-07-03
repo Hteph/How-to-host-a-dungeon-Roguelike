@@ -42,9 +42,9 @@ public class PlayScreen implements Screen {
 		createCreatures(stuffFactory);
 		createItems(stuffFactory);
 
-		//Mikael added test code
-		test = new ChroniclePane();
-		test.createAndShowGUI();
+//		//Mikael added test code
+//		test = new ChroniclePane();
+//		test.createAndShowGUI();
 		
 		
 	}
@@ -64,7 +64,7 @@ public class PlayScreen implements Screen {
 		
 		if (subscreen != null) subscreen.displayOutput(terminal);
 		
-		test.repaint();
+//		test.repaint();
 		
 	}
 
@@ -74,6 +74,7 @@ public class PlayScreen implements Screen {
 		} else {
 
 		switch (key.getKeyCode()){
+		case KeyEvent.VK_ESCAPE: return new LoseScreen();
 		case KeyEvent.VK_LEFT:
 		case KeyEvent.VK_H: player.moveBy(-1, 0,0); break;
 		case KeyEvent.VK_RIGHT:
@@ -88,6 +89,7 @@ public class PlayScreen implements Screen {
 		case KeyEvent.VK_N: player.moveBy( 1, 1,0); break;
 		case KeyEvent.VK_D: subscreen = new DropScreen(player); break;
 		case KeyEvent.VK_E: subscreen = new EatScreen(player); break;
+		case KeyEvent.VK_W: subscreen = new EquipScreen(player); break;
 		}
 
 		switch (key.getKeyChar()){
@@ -140,15 +142,19 @@ public class PlayScreen implements Screen {
 	}
 	
 	
-	private void createCreatures(StuffFactory creatureFactory){
-		player = creatureFactory.newPlayer(messages, fov);
+	private void createCreatures(StuffFactory factory){
+		player = factory.newPlayer(messages, fov);
 		for (int z = 0; z < world.depth(); z++){
 			for (int i = 0; i < 8; i++){
-				creatureFactory.newFungus(z);
+				factory.newFungus(z);
 			}
 			for (int i = 0; i < 20; i++){
-			    creatureFactory.newBat(z);
+			    factory.newBat(z);
 			}
+			
+			for (int i = 0; i < z + 3; i++){
+		         factory.newZombie(z, player);
+		     }
 		}
 	}
 	

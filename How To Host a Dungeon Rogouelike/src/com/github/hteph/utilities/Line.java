@@ -1,9 +1,6 @@
 package com.github.hteph.utilities;
 
 import java.util.List;
-
-import com.github.hteph.components.Point;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 

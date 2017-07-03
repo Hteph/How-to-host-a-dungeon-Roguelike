@@ -8,6 +8,7 @@ import com.github.hteph.components.FungusAi;
 import com.github.hteph.components.Item;
 import com.github.hteph.components.PlayerAi;
 import com.github.hteph.components.World;
+import com.github.hteph.components.ZombieAi;
 
 import asciiPanel.AsciiPanel;
 
@@ -23,6 +24,13 @@ public class StuffFactory {
         world.addAtEmptyLocation(player,0);
         new PlayerAi(player, messages, fov);
         return player;
+    }
+    
+    public Creature newZombie(int depth, Creature player){
+        Creature zombie = new Creature(world, 'z', AsciiPanel.white, "zombie", 50, 10, 10);
+        world.addAtEmptyLocation(zombie, depth);
+        new ZombieAi(zombie, player);
+        return zombie;
     }
 
     public Creature newFungus(int depth){
@@ -109,4 +117,12 @@ public class StuffFactory {
         default: return newHeavyArmor(depth);
         }
       }
+      
+      public Item newEdibleWeapon(int depth){
+    	    Item item = new Item(')', AsciiPanel.yellow, "baguette");
+    	    item.modifyAttackValue(3);
+    	    item.modifyFoodValue(50);
+    	    world.addAtEmptyLocation(item, depth);
+    	    return item;
+    	  }
 }

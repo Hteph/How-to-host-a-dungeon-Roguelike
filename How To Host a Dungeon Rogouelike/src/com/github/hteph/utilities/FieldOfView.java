@@ -1,6 +1,5 @@
 package com.github.hteph.utilities;
 
-import com.github.hteph.components.Point;
 import com.github.hteph.components.Tile;
 import com.github.hteph.components.World;
 

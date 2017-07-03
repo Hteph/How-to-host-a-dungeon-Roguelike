@@ -2,6 +2,9 @@ package com.github.hteph.components;
 
 import java.awt.Color;
 
+import com.github.hteph.UI.LoseScreen;
+import com.github.hteph.UI.WinScreen;
+
 public class Creature {
 	private World world;
 
@@ -92,6 +95,7 @@ public class Creature {
 	          weapon = null;
 	      }
 	  }
+	
 	public void equip(Item item){
 	      if (item.attackValue() == 0 && item.defenseValue() == 0)
 	          return;
@@ -163,7 +167,7 @@ public class Creature {
 
 
 		if (mz == -1){
-			System.out.println("Hepp");
+			
 			if (tile == Tile.STAIRS_DOWN) {
 				doAction("walk up the stairs to level %d", z+mz+1);
 			} else {
@@ -201,10 +205,11 @@ public class Creature {
 	public void modifyHp(int amount) {
 		hp += amount;
 
-		if (hp < 1)
+		if (hp < 1) {
 	        doAction("die");
 	        leaveCorpse();
 			world.remove(this);
+		}
 	} 
 
 	public void update(){

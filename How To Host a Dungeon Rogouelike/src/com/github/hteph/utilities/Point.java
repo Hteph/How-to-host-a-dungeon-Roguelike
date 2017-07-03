@@ -1,4 +1,4 @@
-package com.github.hteph.components;
+package com.github.hteph.utilities;
 
 import java.util.ArrayList;
 import java.util.Collections;
