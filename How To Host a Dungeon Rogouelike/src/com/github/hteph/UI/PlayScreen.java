@@ -26,6 +26,7 @@ public class PlayScreen implements Screen {
 	private List<String> messages;
 	private FieldOfView fov;
 	private Screen subscreen;
+	private ChroniclePane test;
 	
 // Constructor ---------------------------------------------------
 	public PlayScreen(){
@@ -41,6 +42,10 @@ public class PlayScreen implements Screen {
 		createCreatures(stuffFactory);
 		createItems(stuffFactory);
 
+		//Mikael added test code
+		test = new ChroniclePane();
+		test.createAndShowGUI();
+		
 		
 	}
 
@@ -59,7 +64,8 @@ public class PlayScreen implements Screen {
 		
 		if (subscreen != null) subscreen.displayOutput(terminal);
 		
-//		JOptionPane.showMessageDialog(null, "My Goodness, this is so concise");
+		test.repaint();
+		
 	}
 
 	public Screen respondToUserInput(KeyEvent key) {
