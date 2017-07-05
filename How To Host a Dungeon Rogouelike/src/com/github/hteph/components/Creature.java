@@ -161,6 +161,7 @@ public class Creature {
 	}
 
 	public void moveBy(int mx, int my, int mz){
+		
 		Tile tile = world.tile(x+mx, y+my, z+mz);
 
 		if (mx==0 && my==0 && mz==0) return; // If standing still bail out from this
@@ -185,11 +186,10 @@ public class Creature {
 
 		Creature other = world.creature(x+mx, y+my, z+mz);
 
-		if (other == null)
-			ai.onEnter(x+mx, y+my, z+mz, tile);
-		else
-			attack(other);
+		if (other == null) ai.onEnter(x+mx, y+my, z+mz, tile);
+		else attack(other);
 	}
+	
 
 
 	public void attack(Creature other){

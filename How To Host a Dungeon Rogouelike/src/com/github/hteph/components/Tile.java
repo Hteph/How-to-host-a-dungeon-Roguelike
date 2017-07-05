@@ -12,10 +12,10 @@ public enum Tile {
     UNKNOWN(' ', AsciiPanel.white);
 
     private char glyph;
-    public char glyph() { return glyph; }
+    public char glyph() { return glyph; } //TODO rename to proper getter
 
     private Color color;
-    public Color color() { return color; }
+    public Color color() { return color; } // TODO rename to proper getter
 
     Tile(char glyph, Color color){
         this.glyph = glyph;
