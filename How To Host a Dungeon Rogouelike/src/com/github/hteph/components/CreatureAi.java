@@ -1,5 +1,6 @@
 package com.github.hteph.components;
 
+import com.github.hteph.utilities.LevelUpController;
 import com.github.hteph.utilities.Line;
 import com.github.hteph.utilities.Point;
 
@@ -63,4 +64,8 @@ public class CreatureAi {
 	    else
 	        creature.moveBy(mx, my, 0);
 	}
+	
+	public void onGainLevel() {
+	    new LevelUpController().autoLevelUp(creature);
+	  }
 }

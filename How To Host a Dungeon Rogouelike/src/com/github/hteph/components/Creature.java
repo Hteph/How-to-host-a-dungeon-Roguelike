@@ -62,6 +62,12 @@ public class Creature {
 
 	  private Item armor;
 	  public Item armor() { return armor; }
+	  
+	  private int xp;
+	  public int xp() { return xp; }
+	  
+	  private int level;
+	  public int level() { return level; }
 
 //Constructor --------------------------------------------------------------------
 
@@ -78,6 +84,7 @@ public class Creature {
 		this.inventory = new Inventory(20);
 		this.maxFood = 1000;
 		this.food = maxFood / 3 * 2;
+		this.level = 1;
 
 	}
 
@@ -200,6 +207,8 @@ public class Creature {
 		other.modifyHp(-amount);
 		notify("You attack the '%s' for %d damage.", other.name, amount);
 		other.notify("The '%s' attacks you for %d damage.", name, amount);
+		
+		if (other.hp < 1) gainXp(other);
 	}
 
 	public void modifyHp(int amount) {
@@ -301,4 +310,49 @@ public class Creature {
 	    corpse.modifyFoodValue(maxHp * 3);
 	    world.addAtEmptySpace(corpse, x, y, z);
 	}
+	
+	public void modifyXp(int amount) {
+	      xp += amount;
+
+	      notify("You %s %d xp.", amount < 0 ? "lose" : "gain", amount);
+
+	      while (xp > (int)(Math.pow(level, 1.5) * 20)) {
+	          level++;
+	          doAction("advance to level %d", level);
+	          ai.onGainLevel();
+	          modifyHp(level * 2);
+	      }
+	  }
+
+	public void gainXp(Creature other){
+	    int amount = 
+	    		other.maxHp
+	    		+ other.attackValue()
+	    		+ other.defenseValue()
+	    		- level * 2;
+
+	    if (amount > 0)
+	      modifyXp(amount);
+	  }
+	
+	public void gainMaxHp() {
+	    maxHp += 10;
+	    hp += 10;
+	    doAction("look healthier");
+	  }
+
+	  public void gainAttackValue() {
+	    attackValue += 2;
+	    doAction("look stronger");
+	  }
+
+	  public void gainDefenseValue() {
+	    defenseValue += 2;
+	    doAction("look tougher");
+	  }
+
+	  public void gainVision() {
+	    visionRadius += 1;
+	    doAction("look more aware");
+	  }
 }

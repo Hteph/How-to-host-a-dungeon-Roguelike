@@ -15,7 +15,7 @@ public class Point {
         this.z = z;
     }
     
-	public List<Point> neighbors8(){
+	public List<Point> neighbors8(){ //TODO better name
 	    List<Point> points = new ArrayList<>();
 	  
 	    for (int ox = -1; ox < 2; ox++){

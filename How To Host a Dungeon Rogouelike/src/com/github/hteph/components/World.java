@@ -106,6 +106,7 @@ public class World {
 	        creature.update();
 	    }
 	}
+	
 	// Item initial placement
 	public void addAtEmptyLocation(Item item, int depth) {
 	    int x;
@@ -120,7 +121,8 @@ public class World {
 	    items[x][y][depth] = item;
 	}
 
-	public boolean addAtEmptySpace(Item item, int x, int y, int z){
+	//TODO place stuff in heaps
+	public boolean addAtEmptySpace(Item item, int x, int y, int z){ //TODO better name!
 		if (item == null)
 			return true;
 		

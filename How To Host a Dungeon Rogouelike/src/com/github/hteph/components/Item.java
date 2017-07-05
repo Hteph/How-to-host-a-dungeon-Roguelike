@@ -18,11 +18,11 @@ public class Item {
     public void modifyFoodValue(int amount) { foodValue += amount; }
     
     private int attackValue;
-    public int attackValue() { return attackValue; }
+    public int attackValue() { return attackValue; } //TODOD getter name
     public void modifyAttackValue(int amount) { attackValue += amount; }
 
     private int defenseValue;
-    public int defenseValue() { return defenseValue; }
+    public int defenseValue() { return defenseValue; } //TODOD getter name
     public void modifyDefenseValue(int amount) { defenseValue += amount; }
 
 	// Constructor ----------------------------------------------
