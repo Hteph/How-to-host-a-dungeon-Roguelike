@@ -24,6 +24,16 @@ public class Item {
     private int defenseValue;
     public int defenseValue() { return defenseValue; } //TODOD getter name
     public void modifyDefenseValue(int amount) { defenseValue += amount; }
+    
+	private int thrownAttackValue;
+	public int thrownAttackValue() { return thrownAttackValue; }
+	public void modifyThrownAttackValue(int amount) { thrownAttackValue += amount; }
+
+	private int rangedAttackValue;
+	public int rangedAttackValue() { return rangedAttackValue; }
+	public void modifyRangedAttackValue(int amount) { rangedAttackValue += amount; }
+	
+
 
 	// Constructor ----------------------------------------------
 
@@ -31,7 +41,25 @@ public class Item {
         this.glyph = glyph;
         this.color = color;
         this.name = name;
+		this.thrownAttackValue = 1;
     }
+    
+    public String details() {
+        String details = "";
+
+        if (attackValue != 0) details += "     attack:" + attackValue;
+                
+		if (thrownAttackValue != 1) details += "  thrown:" + thrownAttackValue;			
+		
+		if (rangedAttackValue > 0) details += "  ranged:" + rangedAttackValue;
+			
+        if (defenseValue != 0) details += "     defense:" + defenseValue;
+            
+        if (foodValue != 0) details += "     food:" + foodValue;
+                    
+        return details;
+    }
+	
     
 	//Methods --------------------------------------------------
 

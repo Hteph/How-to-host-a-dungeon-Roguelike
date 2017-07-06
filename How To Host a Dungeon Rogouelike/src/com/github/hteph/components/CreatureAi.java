@@ -68,4 +68,8 @@ public class CreatureAi {
 	public void onGainLevel() {
 	    new LevelUpController().autoLevelUp(creature);
 	  }
+	
+	public Tile rememberedTile(int wx, int wy, int wz) {
+        return Tile.UNKNOWN;
+    }
 }
