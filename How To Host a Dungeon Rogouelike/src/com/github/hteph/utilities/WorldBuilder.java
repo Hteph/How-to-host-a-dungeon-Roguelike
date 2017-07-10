@@ -3,6 +3,7 @@ package com.github.hteph.utilities;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import com.github.hteph.components.Tile;
 import com.github.hteph.components.World;
@@ -47,16 +48,32 @@ public class WorldBuilder {
 
 	private WorldBuilder randomizeTiles() {
 		
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
-				for (int z = 0; z < depth; z++) {
-					tiles[x][y][z] = Math.random() < 0.5 ? Tile.FLOOR : Tile.WALL;
-				}
-			}
-		}
+		Tile[][][] array = IntStream.range(0,width)
+				.mapToObj(x -> IntStream.range(0, height)
+				.mapToObj(y -> IntStream.range(0, depth)
+                .mapToObj(z -> Math.random() < 0.5 ? Tile.FLOOR : Tile.WALL)
+                .toArray(Tile[]::new))
+				.toArray(Tile[][]::new))
+				.toArray(Tile[][][]::new);  
+
+		
+//		for (int x = 0; x < width; x++) {
+//			for (int y = 0; y < height; y++) {
+//				for (int z = 0; z < depth; z++) {
+//					tiles[x][y][z] = Math.random() < 0.5 ? Tile.FLOOR : Tile.WALL;
+//				}
+//			}
+//		}
+		
+			tiles = array;
 		return this;
 	}
 
+
+	
+	
+	
+	
 	private WorldBuilder smooth(int times) {
 		
 		Tile[][] [] tiles2 = new Tile[width][height][depth];
@@ -70,13 +87,10 @@ public class WorldBuilder {
 
 						for (int ox = -1; ox < 2; ox++) {
 							for (int oy = -1; oy < 2; oy++) {
-								if (x + ox < 0 || x + ox >= width || y + oy < 0 || y + oy >= height)
-									continue; // out of bound, no calc
-
-								if (tiles[x + ox][y + oy] [z] == Tile.FLOOR)
-									floors++;
-								else
-									rocks++;
+								if (x + ox < 0 || x + ox >= width || y + oy < 0 || y + oy >= height) continue; // out of bound, no calc
+	
+								if (tiles[x + ox][y + oy] [z] == Tile.FLOOR) floors++;	
+								else rocks++;									
 							}
 						}
 						tiles2[x][y][z] = floors >= rocks ? Tile.FLOOR : Tile.WALL;
