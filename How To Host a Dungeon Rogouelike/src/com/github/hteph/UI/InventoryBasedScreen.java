@@ -45,7 +45,7 @@ public abstract class InventoryBasedScreen implements Screen {
 		char c = key.getKeyChar();
 
 		Item[] items = player.inventory().getItems();
-		System.out.println("hepp");
+
 		if (letters.indexOf(c) > -1
 				&& items.length > letters.indexOf(c)
 				&& items[letters.indexOf(c)] != null

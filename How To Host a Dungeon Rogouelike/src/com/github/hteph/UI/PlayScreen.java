@@ -59,7 +59,7 @@ public class PlayScreen implements Screen {
 		displayMessages(terminal, messages);
 
 
-		String stats = String.format(" %3d/%3d hp %8s", player.hp(), player.maxHp(), hunger());
+		String stats = String.format(" %3d/%3d hp %8s", player.hp(), player.maxHp(), player.mana(), player.maxMana(), hunger());
 		terminal.write(stats, 1, 23);
 
 		if (subscreen != null) subscreen.displayOutput(terminal);
@@ -91,6 +91,7 @@ public class PlayScreen implements Screen {
 			case KeyEvent.VK_E: subscreen = new EatScreen(player); break;
 			case KeyEvent.VK_W: subscreen = new EquipScreen(player); break;
 			case KeyEvent.VK_X: subscreen = new ExamineScreen(player); break;
+			case KeyEvent.VK_Q: subscreen = new QuaffScreen(player); break;
 			case KeyEvent.VK_SEMICOLON: subscreen = new LookScreen(player, "Looking", 
 					player.x - getScrollX(), 
 					player.y - getScrollY()); break;
@@ -104,6 +105,9 @@ public class PlayScreen implements Screen {
 					subscreen = new FireWeaponScreen(player,
 						player.x - getScrollX(), 
 						player.y - getScrollY()); break;
+			case KeyEvent.VK_R: subscreen = new ReadScreen(player,
+					player.x - getScrollX(), 
+					player.y - getScrollY()); break;
 			}
 			
 			switch (key.getKeyChar()){
@@ -182,13 +186,21 @@ public class PlayScreen implements Screen {
 			for (int i = 0; i < world.width() * world.height() / 20; i++){
 				factory.newRock(z);
 			}
+			
+			// My own numbers for generate stuff
+			for (double i=0;i<10;i+=0.5+Math.random()) {factory.randomArmor(z);}
 
-			factory.randomArmor(z);
-			factory.randomWeapon(z);
-			factory.randomWeapon(z);
+			for (double i=0;i<10;i+=0.5+Math.random()*2) {factory.randomWeapon(z);}
+			
+			for (double i=0;i<10;i+=0.5+Math.random()*2) {factory.randomWeapon(z);}
+			
+			for (double i=0;i<10;i+=0.5+Math.random()*2) {factory.randomPotion(z);}
+			
+			for (double i=0;i<10;i+=0.5+Math.random()*2) factory.randomSpellBook(z);
 
 
 		}
+		
 		factory.newVictoryItem(world.depth() - 1);
 	}
 

@@ -46,7 +46,12 @@ public class LevelUpController {
 		    },
 		    new LevelUpOption("Increased vision"){
 		      public void invoke(Creature creature) { creature.gainVision(); }
-		    }
+		    },
+		    new LevelUpOption("Increased mana"){
+	            public void invoke(Creature creature) { creature.gainMaxMana(); }
+	        },new LevelUpOption("Increased mana regeneration"){
+	            public void invoke(Creature creature) { creature.gainRegenMana(); }
+	        }
 		  };
 	// Getters and Setters -------------------------------------
 }

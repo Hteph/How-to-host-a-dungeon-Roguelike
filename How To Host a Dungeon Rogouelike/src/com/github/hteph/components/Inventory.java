@@ -37,8 +37,17 @@ public class Inventory {
             if (items[i] != null)
                  size++;
         }
-        return size == items.length;
+        return size == items.length; 
+        
     }
+    
+	public boolean contains(Item item) {
+		for (Item i : items){
+			if (i == item)
+				return true;
+		}
+		return false;
+	}
 	//Internal Methods ----------------------------------------
 
 	// Getters and Setters -------------------------------------

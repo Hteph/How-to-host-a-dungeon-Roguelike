@@ -1,6 +1,8 @@
 package com.github.hteph.components;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Item {
 	
@@ -33,8 +35,17 @@ public class Item {
 	public int rangedAttackValue() { return rangedAttackValue; }
 	public void modifyRangedAttackValue(int amount) { rangedAttackValue += amount; }
 	
+	private Effect quaffEffect;
+	public Effect quaffEffect() { return quaffEffect; }
+	public void setQuaffEffect(Effect effect) { this.quaffEffect = effect; }
 
-
+	private List<Spell> writtenSpells;
+	public List<Spell> writtenSpells() { return writtenSpells; }
+	
+	public void addWrittenSpell(String name, int manaCost, Effect effect){
+		writtenSpells.add(new Spell(name, manaCost, effect));
+	}
+	
 	// Constructor ----------------------------------------------
 
     public Item(char glyph, Color color, String name){
@@ -42,6 +53,7 @@ public class Item {
         this.color = color;
         this.name = name;
 		this.thrownAttackValue = 1;
+		this.writtenSpells = new ArrayList<Spell>();
     }
     
     public String details() {

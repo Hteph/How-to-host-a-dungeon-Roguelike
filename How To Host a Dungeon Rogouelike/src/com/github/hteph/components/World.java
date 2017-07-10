@@ -123,6 +123,8 @@ public class World {
 
 	//TODO place stuff in heaps
 	public boolean addAtEmptySpace(Item item, int x, int y, int z){ //TODO better name!
+		
+		
 		if (item == null)
 			return true;
 		
@@ -135,8 +137,13 @@ public class World {
 			Point p = points.remove(0);
 			checked.add(p);
 			
-			if (!tiles[p.x][p.y][p.z].isGround())
-				continue;
+			try {
+				if (!tiles[p.x][p.y][p.z].isGround()) continue;
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
+				
 				
 			if (items[p.x][p.y][p.z] == null){
 				items[p.x][p.y][p.z] = item;
@@ -151,5 +158,22 @@ public class World {
 			}
 		}
 		return false;
+	}
+	
+	public void remove(Item item) {
+        for (int x = 0; x < width; x++){
+            for (int y = 0; y < height; y++){
+                for (int z = 0; z < depth; z++){
+                if (items[x][y][z] == item) {
+                    items[x][y][z] = null;
+                    return;
+                }
+            }
+        }
+    }
+}
+
+	public void add(Creature pet) {
+		creatures.add(pet);
 	}
 }
