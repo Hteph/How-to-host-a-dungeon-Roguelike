@@ -23,6 +23,8 @@ public class ApplicationMain extends JFrame implements KeyListener {
         addKeyListener(this);
         repaint();
     }
+    
+    // Methods ----------------------------------------------
 
     public void repaint(){
         terminal.clear();

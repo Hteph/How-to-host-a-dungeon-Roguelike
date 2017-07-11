@@ -16,8 +16,7 @@ public class WorldBuilder {
 	private int[][][] regions;
 	private int nextRegion;
 
-
-//Constructor -----------------------------------------------
+// Constructor -----------------------------------------------
 
 	public WorldBuilder(int width, int height, int depth) {
 		this.width = width;
@@ -36,61 +35,60 @@ public class WorldBuilder {
 	}
 
 	public WorldBuilder makeCaves() {
-		
-		return randomizeTiles()
-				.smooth(8)
-				.createRegions()
-				.connectRegions()
-				.addExitStairs();
+
+		return randomizeTiles().smooth(8).createRegions().connectRegions().addExitStairs();
 	}
 
 // Internal Methods -------------------------------------
 
 	private WorldBuilder randomizeTiles() {
-		
-		Tile[][][] array = IntStream.range(0,width)
-				.mapToObj(x -> IntStream.range(0, height)
-				.mapToObj(y -> IntStream.range(0, depth)
-                .mapToObj(z -> Math.random() < 0.5 ? Tile.FLOOR : Tile.WALL)
-                .toArray(Tile[]::new))
-				.toArray(Tile[][]::new))
-				.toArray(Tile[][][]::new);  
 
-		
-//		for (int x = 0; x < width; x++) {
-//			for (int y = 0; y < height; y++) {
-//				for (int z = 0; z < depth; z++) {
-//					tiles[x][y][z] = Math.random() < 0.5 ? Tile.FLOOR : Tile.WALL;
-//				}
-//			}
-//		}
-		
-			tiles = array;
+		// Made a stream of the generator function
+		Tile[][][] array = IntStream.range(0, width)
+				.mapToObj(x -> IntStream.range(0, height)
+						.mapToObj(y -> IntStream.range(0, depth)
+								.mapToObj(z -> Math.random() < 0.5 ? Tile.FLOOR : Tile.WALL).toArray(Tile[]::new))
+						.toArray(Tile[][]::new))
+				.toArray(Tile[][][]::new);
+
+// Old generator
+// for (int x = 0; x < width; x++) {
+// for (int y = 0; y < height; y++) {
+// for (int z = 0; z < depth; z++) {
+// tiles[x][y][z] = Math.random() < 0.5 ? Tile.FLOOR : Tile.WALL;
+// }
+// }
+// }
+
+		tiles = array;
+
+		System.out.println(tiles[1][1].length);
 		return this;
 	}
 
-
-	
-	
-	
-	
 	private WorldBuilder smooth(int times) {
-		
-		Tile[][] [] tiles2 = new Tile[width][height][depth];
+
+		Tile[][][] tiles2 = new Tile[width][height][depth];
+
 		for (int time = 0; time < times; time++) {
 
 			for (int x = 0; x < width; x++) {
 				for (int y = 0; y < height; y++) {
 					for (int z = 0; z < depth; z++) {
+
 						int floors = 0;
 						int rocks = 0;
 
 						for (int ox = -1; ox < 2; ox++) {
 							for (int oy = -1; oy < 2; oy++) {
-								if (x + ox < 0 || x + ox >= width || y + oy < 0 || y + oy >= height) continue; // out of bound, no calc
-	
-								if (tiles[x + ox][y + oy] [z] == Tile.FLOOR) floors++;	
-								else rocks++;									
+
+								if (x + ox < 0 || x + ox >= width || y + oy < 0 || y + oy >= height)
+									continue; // out of bound, no calc
+
+								if (tiles[x + ox][y + oy][z] == Tile.FLOOR)
+									floors++;
+								else
+									rocks++;
 							}
 						}
 						tiles2[x][y][z] = floors >= rocks ? Tile.FLOOR : Tile.WALL;
@@ -98,19 +96,18 @@ public class WorldBuilder {
 				}
 			}
 			tiles = tiles2;
-
 		}
 		return this;
 	}
 
-	private WorldBuilder createRegions(){
-		
+	private WorldBuilder createRegions() {
+
 		regions = new int[width][height][depth];
 
-		for (int z = 0; z < depth; z++){
-			for (int x = 0; x < width; x++){
-				for (int y = 0; y < height; y++){
-					if (tiles[x][y][z] != Tile.WALL && regions[x][y][z] == 0){
+		for (int z = 0; z < depth; z++) {
+			for (int x = 0; x < width; x++) {
+				for (int y = 0; y < height; y++) {
+					if (tiles[x][y][z] != Tile.WALL && regions[x][y][z] == 0) {
 						int size = fillRegion(nextRegion++, x, y, z);
 
 						if (size < 25)
@@ -119,28 +116,27 @@ public class WorldBuilder {
 				}
 			}
 		}
-		
+
 		return this;
 	}
-	
-	
+
 	private WorldBuilder addExitStairs() {
-        int x = -1;
-        int y = -1;
-    
-        do {
-            x = (int)(Math.random() * width);
-            y = (int)(Math.random() * height);
-        }
-        while (tiles[x][y][0] != Tile.FLOOR);
-    
-        tiles[x][y][0] = Tile.STAIRS_UP;
-        return this;
-    }
-	private void removeRegion(int region, int z){
-		for (int x = 0; x < width; x++){
-			for (int y = 0; y < height; y++){
-				if (regions[x][y][z] == region){
+		int x = -1;
+		int y = -1;
+
+		do {
+			x = (int) (Math.random() * width);
+			y = (int) (Math.random() * height);
+		} while (tiles[x][y][0] != Tile.FLOOR);
+
+		tiles[x][y][0] = Tile.STAIRS_UP;
+		return this;
+	}
+
+	private void removeRegion(int region, int z) {
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				if (regions[x][y][z] == region) {
 					regions[x][y][z] = 0;
 					tiles[x][y][z] = Tile.WALL;
 				}
@@ -151,16 +147,16 @@ public class WorldBuilder {
 	private int fillRegion(int region, int x, int y, int z) {
 		int size = 1;
 		ArrayList<Point> open = new ArrayList<Point>();
-		open.add(new Point(x,y,z));
+		open.add(new Point(x, y, z));
 		regions[x][y][z] = region;
-		
-		while (!open.isEmpty()){
+
+		while (!open.isEmpty()) {
 			Point p = open.remove(0);
 
-			for (Point neighbor : p.neighbors8()){
+			for (Point neighbor : p.neighbors8()) {
 				if (neighbor.x < 0 || neighbor.y < 0 || neighbor.x >= width || neighbor.y >= height)
 					continue;
-				
+
 				if (regions[neighbor.x][neighbor.y][neighbor.z] > 0
 						|| tiles[neighbor.x][neighbor.y][neighbor.z] == Tile.WALL)
 					continue;
@@ -173,56 +169,47 @@ public class WorldBuilder {
 		return size;
 	}
 
+	public WorldBuilder connectRegions() {
 
-	public WorldBuilder connectRegions(){
-		
-		for (int z = 0; z < depth-1; z++){
-			
-			connectRegionsDown(z);
-		}
-		return this;
-	}  
+		for (int z = 0; z < depth - 1; z++) {
 
-	private void connectRegionsDown(int z){
-		
-		List<String> connected = new ArrayList<String>();
+			List<String> connected = new ArrayList<String>();
 
-		for (int x = 0; x < width; x++){
-			for (int y = 0; y < height; y++){
-				String region = regions[x][y][z] + "," + regions[x][y][z+1];
-				if (tiles[x][y][z] == Tile.FLOOR
-						&& tiles[x][y][z+1] == Tile.FLOOR
-						&& !connected.contains(region)){
-					connected.add(region);
-					connectRegionsDown(z, regions[x][y][z], regions[x][y][z+1]);
+			for (int x = 0; x < width; x++) {
+				for (int y = 0; y < height; y++) {
+					String region = regions[x][y][z] + "," + regions[x][y][z + 1];
+					if (tiles[x][y][z] == Tile.FLOOR && tiles[x][y][z + 1] == Tile.FLOOR && !connected.contains(region)) {
+						connected.add(region);
+						connectRegionsDown(z, regions[x][y][z], regions[x][y][z + 1]);
+					}
 				}
 			}
 		}
+		return this;
 	}
 
-	private void connectRegionsDown(int z, int r1, int r2){
+
+
+	private void connectRegionsDown(int z, int r1, int r2) {
 		List<Point> candidates = findRegionOverlaps(z, r1, r2);
 
 		int stairs = 0;
-		do{
+		do {
 			Point p = candidates.remove(0);
 			tiles[p.x][p.y][z] = Tile.STAIRS_DOWN;
-			tiles[p.x][p.y][z+1] = Tile.STAIRS_UP;
+			tiles[p.x][p.y][z + 1] = Tile.STAIRS_UP;
 			stairs++;
-		}
-		while (candidates.size() / stairs > 250);
+		} while (candidates.size() / stairs > 250);
 	}
 
 	public List<Point> findRegionOverlaps(int z, int r1, int r2) {
 		ArrayList<Point> candidates = new ArrayList<Point>();
 
-		for (int x = 0; x < width; x++){
-			for (int y = 0; y < height; y++){
-				if (tiles[x][y][z] == Tile.FLOOR
-						&& tiles[x][y][z+1] == Tile.FLOOR
-						&& regions[x][y][z] == r1
-						&& regions[x][y][z+1] == r2){
-					candidates.add(new Point(x,y,z));
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				if (tiles[x][y][z] == Tile.FLOOR && tiles[x][y][z + 1] == Tile.FLOOR && regions[x][y][z] == r1
+						&& regions[x][y][z + 1] == r2) {
+					candidates.add(new Point(x, y, z));
 				}
 			}
 		}

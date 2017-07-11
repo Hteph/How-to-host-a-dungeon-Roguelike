@@ -164,9 +164,12 @@ public class PlayScreen implements Screen {
 			return "";
 	}
 
-
+	//TODO Why are the following two functions in the playscreen, shouldn't they be in world construction?
+	
 	private void createCreatures(StuffFactory factory){
+		
 		player = factory.newPlayer(messages, fov);
+		
 		for (int z = 0; z < world.depth(); z++){
 			for (int i = 0; i < 8; i++){
 				factory.newFungus(z);
@@ -246,8 +249,9 @@ public class PlayScreen implements Screen {
 
 	private Screen userExits(){
 		for (Item item : player.inventory().getItems()){
-			if (item != null && item.name().equals("teddy bear"))
-				return new WinScreen();
+			
+			if (item != null && item.name().equals("teddy bear")) return new WinScreen();
+				
 		}
 		return new LoseScreen();
 	}
