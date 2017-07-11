@@ -188,8 +188,6 @@ public class WorldBuilder {
 		return this;
 	}
 
-
-
 	private void connectRegionsDown(int z, int r1, int r2) {
 		List<Point> candidates = findRegionOverlaps(z, r1, r2);
 

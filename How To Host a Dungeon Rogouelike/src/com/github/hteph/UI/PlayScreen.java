@@ -34,19 +34,12 @@ public class PlayScreen implements Screen {
 		screenHeight = 21;
 		messages = new ArrayList<String>();
 
-
 		createWorld();
 
 		fov = new FieldOfView(world);
 		StuffFactory stuffFactory = new StuffFactory(world);
 		createCreatures(stuffFactory);
 		createItems(stuffFactory);
-
-//		//Mikael added test code
-//		test = new ChroniclePane();
-//		test.createAndShowGUI();
-
-
 	}
 
 // Methods -----------------------------------------------------------

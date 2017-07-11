@@ -67,7 +67,9 @@ public class ReadSpellScreen implements Screen {
         return new CastSpellScreen(player, "", sx, sy, spell);
     }
 	//Internal Methods ----------------------------------------
+    
     private ArrayList<String> getList() {
+    	
         ArrayList<String> lines = new ArrayList<String>();
         
         for (int i = 0; i < item.writtenSpells().size(); i++){
