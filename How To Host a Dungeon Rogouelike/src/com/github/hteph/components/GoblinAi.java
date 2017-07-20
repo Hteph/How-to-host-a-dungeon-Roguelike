@@ -26,6 +26,11 @@ public class GoblinAi extends CreatureAi {
 	}
     
 	//Internal Methods ----------------------------------------
+	
+//	public void discussItemName(Item item, Creature other){
+//    creature.doAction(item, "say \"%ss are %ss\"", item.appearance(), item.name());
+//    other.learnName(item);
+//}
 
 	// Getters and Setters -------------------------------------
 }

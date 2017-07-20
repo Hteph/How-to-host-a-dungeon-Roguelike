@@ -23,7 +23,7 @@ public enum Tile {
     Tile(char glyph, Color color, String details){
         this.glyph = glyph;
         this.color = color;
-        this. details = details;
+        this.details = details;
         
     }
     

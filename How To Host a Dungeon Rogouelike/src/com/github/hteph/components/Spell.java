@@ -10,7 +10,7 @@ public class Spell {
 
     private Effect effect;
     public Effect effect() {
-    	System.out.println("SPELL");
+
     	Effect tEff = new Effect(effect); 
     	return tEff;
     	}

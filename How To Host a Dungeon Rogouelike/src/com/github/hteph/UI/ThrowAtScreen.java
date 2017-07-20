@@ -10,7 +10,7 @@ public class ThrowAtScreen extends TargetBasedScreen {
 
 	// Constructor ----------------------------------------------
     public ThrowAtScreen(Creature player, int sx, int sy, Item item) {
-        super(player, "Throw " + item.name() + " at?", sx, sy);
+        super(player, "Throw " + player.nameOf(item) + " at?", sx, sy);
         this.item = item;
     }
 	//Methods --------------------------------------------------

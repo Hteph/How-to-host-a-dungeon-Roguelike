@@ -62,7 +62,7 @@ public class WorldBuilder {
 
 		tiles = array;
 
-		System.out.println(tiles[1][1].length);
+
 		return this;
 	}
 

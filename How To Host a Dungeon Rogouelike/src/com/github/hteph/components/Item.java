@@ -12,7 +12,7 @@ public class Item {
     private Color color;
     public Color color() { return color; }
 
-    private String name;
+    private String name ="Something";
     public String name() { return name; }
     
     private int foodValue;
@@ -38,7 +38,14 @@ public class Item {
 	private Effect quaffEffect;
 	public Effect quaffEffect() { return quaffEffect; }
 	public void setQuaffEffect(Effect effect) { this.quaffEffect = effect; }
-
+	
+	private String appearance = "Nothing";
+	public String appearance() { 
+	    if (appearance == null) return name;       
+	    return appearance;
+	}
+	
+	// Spell system - Should be revised not working!
 	private List<Spell> writtenSpells;
 	public List<Spell> writtenSpells() { return writtenSpells; }
 	
@@ -48,10 +55,11 @@ public class Item {
 	
 	// Constructor ----------------------------------------------
 
-    public Item(char glyph, Color color, String name){
+    public Item(char glyph, Color color, String name, String appearance){
         this.glyph = glyph;
         this.color = color;
         this.name = name;
+        this.appearance = appearance == null ? name : appearance;
 		this.thrownAttackValue = 1;
 		this.writtenSpells = new ArrayList<Spell>();
     }

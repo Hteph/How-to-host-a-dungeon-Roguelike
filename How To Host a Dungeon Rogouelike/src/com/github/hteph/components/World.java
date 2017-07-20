@@ -149,7 +149,7 @@ public class World {
 				items[p.x][p.y][p.z] = item;
 				Creature c = this.creature(p.x, p.y, p.z);
 				if (c != null)
-					c.notify("A %s lands between your feet.", item.name());
+					c.notify("A %s lands between your feet.", c.nameOf(item));
 				return true;
 			} else {
 				List<Point> neighbors = p.neighbors8();
