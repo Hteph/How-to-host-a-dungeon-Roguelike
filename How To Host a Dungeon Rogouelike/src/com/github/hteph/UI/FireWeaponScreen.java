@@ -8,7 +8,7 @@ public class FireWeaponScreen extends TargetBasedScreen {
 
 	// Constructor ----------------------------------------------
     public FireWeaponScreen(Creature player, int sx, int sy) {
-        super(player, "Fire " + player.weapon().name() + " at?", sx, sy);
+        super(player, "Fire " + player.nameOf(player.weapon()) + " at?", sx, sy);
     }
 	//Methods --------------------------------------------------
     public boolean isAcceptable(int x, int y) {

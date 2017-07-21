@@ -192,7 +192,7 @@ public class PlayScreen implements Screen {
 			
 			for (double i=0;i<10;i+=0.5+Math.random()*2) {factory.randomPotion(z);}
 			
-			for (double i=0;i<10;i+=0.5+Math.random()*2) factory.randomSpellBook(z);
+
 
 
 		}

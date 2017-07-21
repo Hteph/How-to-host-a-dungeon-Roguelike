@@ -1,6 +1,8 @@
 package com.github.hteph.components;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.github.hteph.utilities.LevelUpController;
 import com.github.hteph.utilities.Line;
@@ -9,12 +11,14 @@ import com.github.hteph.utilities.Point;
 
 public class CreatureAi {
 	protected Creature creature;
+	private Map<String, String> itemNames;
 
 // Constructor -----------------------------------------
 
 	public CreatureAi(Creature creature) {
 		this.creature = creature;
 		this.creature.setCreatureAi(this);
+		this.itemNames = new HashMap<String, String>();
 	}
 
 	// Methods --------------------------------------------------------
@@ -147,4 +151,18 @@ public class CreatureAi {
 			}
 		}
 	}
+	
+	//Getters and Setters
+	
+    public String getName(Item item){
+
+        String name = itemNames.get(item.name());
+
+        return name == null ? item.appearance() : name;
+    }
+ 
+    public void setName(Item item, String name){
+        itemNames.put(item.name(), name);
+    }
+	
 }

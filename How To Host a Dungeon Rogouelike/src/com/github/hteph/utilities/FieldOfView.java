@@ -8,6 +8,7 @@ public class FieldOfView {
     private int depth;
     
     private boolean[][] visible;
+    
     public boolean isVisible(int x, int y, int z){ //TODO move to methods?
         return z == depth && x >= 0 && y >= 0 && x < visible.length && y < visible[0].length && visible[x][y];
     }
@@ -44,16 +45,16 @@ public class FieldOfView {
 				if (x*x + y*y > r*r)
 					continue;
 				
-				if (wx + x < 0 || wx + x >= world.width() || wy + y < 0 || wy + y >= world.height())
-					continue;
+				if (wx + x < 0 || wx + x >= world.width() || wy + y < 0 || wy + y >= world.height()) continue;
+					
 				
 				for (Point p : new Line(wx, wy, wx + x, wy + y)){
 					Tile tile = world.tile(p.x, p.y, wz);
 					visible[p.x][p.y] = true;
 					tiles[p.x][p.y][wz] = tile; 
 					
-					if (!tile.isGround())
-						break;
+					if (!tile.isGround()) break;
+						
 				}
 			}
 		}
